@@ -20,7 +20,9 @@ header{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1p
 .bud b{font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}
 .bud.over b{color:var(--un)}
 .bud input{width:34px;padding:1px 2px;border:1px solid var(--line);border-radius:4px;text-align:center;font-size:12px}
-.tg{margin-left:auto;border:1px solid var(--line);background:var(--card);border-radius:5px;
+.sv{margin-left:auto;font-size:11.5px;color:var(--rule);white-space:nowrap}
+.sv.warn{color:var(--un)}
+.tg{border:1px solid var(--line);background:var(--card);border-radius:5px;
 padding:4px 9px;font-size:12.5px;cursor:pointer;position:relative;white-space:nowrap}
 .tg+.tg{margin-left:5px}
 .tg.on{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -32,7 +34,7 @@ border-top:1px solid var(--line)}
 .pan select{padding:5px 7px;border:1px solid var(--line);border-radius:5px;background:var(--card);font-size:13px}
 #actp button{flex:1 1 auto;padding:7px 11px;border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:5px;cursor:pointer;font-size:13px}
 #actp button.g{background:transparent;color:var(--ink)}
-.dy{color:var(--un);font-size:12px;flex:0 0 100%;text-align:center}
+.dy{font-size:12px;flex:0 0 100%;text-align:center;color:var(--mute)}
 main{max-width:1080px;margin:0 auto;padding:6px 10px 80px}
 
 .ct{margin:6px 0;background:var(--card);border:1px solid var(--line);border-radius:6px}
@@ -115,7 +117,8 @@ body{background:#fff}.ct{break-inside:avoid}.tp.un{display:none}.th,.cno,.tno{di
 <header>
  <div class="hd"><span class="br">China 2027</span>
   <span class="bud" id="bud"><b id="sum">0</b>/<input type="number" id="tgt" min="1" max="60" value="21"> N</span>
-  <button class="tg" id="tf">Filter</button><button class="tg" id="ta">Datei</button></div>
+  <span class="sv" id="sv">gesichert</span>
+  <button class="tg" id="tf">Filter</button><button class="tg" id="ta">Speichern</button></div>
  <div class="pan" id="tools">
   <input type="search" id="q" placeholder="Suchen…" aria-label="Suchen">
   <select id="fs"><option value="">Claudes Vorschlag: alle</option><option>Pflicht</option><option>Gerne</option><option>Optional</option></select>
@@ -123,8 +126,9 @@ body{background:#fff}.ct{break-inside:avoid}.tp.un{display:none}.th,.cno,.tno{di
   <select id="fst"><option value="">Bewertung: alle</option><option value="open">noch offen</option><option>Pflicht</option><option>Gerne</option><option>Optional</option><option>Unerwünscht</option><option value="dif">weicht von Claude ab</option></select>
   <select id="ff"><option value="">Hinweise: alle</option><option value="!">nur Höhe</option><option value="?">nur ungeprüft</option></select>
  </div>
- <div class="pan" id="actp"><span class="dy" id="dirty" hidden>nicht gespeichert</span>
-  <button id="save">Stand speichern</button><button class="g" id="md">Für Claude</button>
+ <div class="pan" id="actp"><span class="dy">Eingaben werden automatisch im Browser gesichert. „HTML sichern“ erzeugt zusätzlich eine Datei zum Weitergeben.</span>
+  <button id="cp">Für Claude kopieren</button><button class="g" id="save">HTML sichern</button>
+  <button class="g" id="md">Für Claude als Datei</button>
   <button class="g" id="csv">CSV</button><button class="g" id="exp">Alle auf/zu</button></div></header>
 <main id="main"></main>
 <footer><hr>
@@ -137,11 +141,20 @@ Namen anklicken benennt um, ✕ löscht, ＋ ergänzt. Nächte auf 0 heißt: ble
 <script>
 const INIT=JSON.parse(document.getElementById('init-data').textContent);
 let SV=null; try{SV=JSON.parse(document.getElementById('saved-data').textContent);}catch(e){}
-let S=SV||structuredClone(INIT), dirty=false, uid=9000, shut={}, open1={};
+const KEY='china-plan-v3'; let LS=true;
+function readLS(){ try{ const x=localStorage.getItem(KEY); return x?JSON.parse(x):null; }catch(e){ LS=false; return null; } }
+let S=SV||readLS()||structuredClone(INIT), uid=9000, shut={}, open1={};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 const LV=['','Unerwünscht','Optional','Gerne','Pflicht'], RK={'Unerwünscht':0,'Optional':1,'Gerne':2,'Pflicht':3};
-const mark=()=>{dirty=true;$('#dirty').hidden=false;};
+let tmr=null;
+function setSv(txt,warn){ const e=$('#sv'); e.textContent=txt; e.classList.toggle('warn',!!warn); }
+function persist(){
+ if(!LS){ setSv('nur in diesem Tab',1); return; }
+ try{ localStorage.setItem(KEY,JSON.stringify(S)); setSv('gesichert'); }
+ catch(e){ LS=false; setSv('nur in diesem Tab',1); }
+}
+const mark=()=>{ setSv('sichert …'); clearTimeout(tmr); tmr=setTimeout(persist,400); };
 const cityOf=id=>S.cities.find(c=>c.id===id);
 const tripOf=(ci,ti)=>cityOf(ci).t.find(t=>t.id===ti);
 
@@ -306,15 +319,24 @@ const stamp=()=>new Date().toISOString().slice(0,10);
 $('#save').addEventListener('click',()=>{
  const d=document.documentElement.cloneNode(true);
  d.querySelector('#saved-data').textContent=JSON.stringify(S);
- d.querySelector('#main').innerHTML=''; d.querySelector('#dirty').setAttribute('hidden','');
- dl('<!DOCTYPE html>\n'+d.outerHTML,'China-Plan-'+stamp()+'.html','text/html');
- dirty=false;$('#dirty').hidden=true;});
-$('#md').addEventListener('click',()=>{
+ d.querySelector('#main').innerHTML='';
+ dl('<!DOCTYPE html>\n'+d.outerHTML,'China-Plan-'+stamp()+'.html','text/html');});
+function report(){
  let o='# China-Plan — '+stamp()+'\n\nNächte: '+S.cities.reduce((a,c)=>a+(+c.d||0),0)+' (Ziel '+S.target+')\n';
  S.cities.forEach((c,i)=>{o+=`\n## ${i+1}. ${c.n} — ${c.d} Nächte\n`;
   if(c.no)o+=`Notiz: ${c.no}\n`;
   c.t.forEach(t=>{o+=`- ${t.n} [Claude: ${t.s} | ihr: ${t.r||'offen'}]`+(t.no?`\n  Notiz: ${t.no}`:'')+'\n';});});
- dl(o,'China-fuer-Claude-'+stamp()+'.md','text/markdown');});
+ return o;}
+$('#md').addEventListener('click',()=>dl(report(),'China-fuer-Claude-'+stamp()+'.md','text/markdown'));
+$('#cp').addEventListener('click',async e=>{
+ const txt=report(), b=e.target;
+ try{ await navigator.clipboard.writeText(txt); b.textContent='kopiert ✓';
+      setTimeout(()=>b.textContent='Für Claude kopieren',2000); }
+ catch(err){ const ta=document.createElement('textarea');
+  ta.value=txt; ta.style.cssText='position:fixed;top:10%;left:4%;width:92%;height:70%;z-index:200';
+  document.body.append(ta); ta.select();
+  alert('Automatisches Kopieren geht in diesem Browser nicht. Text ist markiert — jetzt kopieren, dann Tippen zum Schließen.');
+  ta.addEventListener('blur',()=>ta.remove()); }});
 $('#csv').addEventListener('click',()=>{
  const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
  const r=[['Nr','Stadt','Nächte','Stadt-Notiz','Trip','Claude','Quelle','Hinweis','Bewertung','Trip-Notiz']];
@@ -323,6 +345,6 @@ $('#csv').addEventListener('click',()=>{
 $('#reset').addEventListener('click',()=>{
  if(confirm('Alles auf Claudes Vorschlag zurücksetzen? Bewertungen und Notizen gehen verloren.')){
   S=structuredClone(INIT);$('#tgt').value=S.target;shut={};open1={};mark();render();}});
-window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
 $('#tgt').value=S.target||21; fdot(); render();
+if(SV) persist(); else if(!readLS()&&LS) persist(); else if(!LS) setSv('nur in diesem Tab',1);
 </script></body></html>
