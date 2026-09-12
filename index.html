@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>China 2027 — Strukturbaum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EFF1EE;--card:#fff;--ink:#1B2B33;--mute:#66757C;--line:#D8DDD9;--rule:#C6CFC9;
+--kajo:#2F5D8C;--knuf:#9C6316;--pfl:#1B2B33;--ger:#2E6E5E;--opt:#7C8A90;--un:#B5453A;--flag:#8A6D1F;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:14.5px/1.45 var(--sans);
+-webkit-text-size-adjust:100%}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--kajo);outline-offset:1px}
+header{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--line)}
+.hd{max-width:1080px;margin:0 auto;padding:7px 14px;display:flex;align-items:center;gap:9px}
+.br{font-family:Spectral,Georgia,serif;font-size:15px;color:var(--mute);white-space:nowrap}
+.bud{font-size:13px;color:var(--mute);white-space:nowrap}
+.bud b{font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}
+.bud.over b{color:var(--un)}
+.bud input{width:34px;padding:1px 2px;border:1px solid var(--line);border-radius:4px;text-align:center;font-size:12px}
+.tg{margin-left:auto;border:1px solid var(--line);background:var(--card);border-radius:5px;
+padding:4px 9px;font-size:12.5px;cursor:pointer;position:relative;white-space:nowrap}
+.tg+.tg{margin-left:5px}
+.tg.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tg i{position:absolute;top:2px;right:3px;width:6px;height:6px;border-radius:50%;background:var(--un)}
+.pan{display:none;max-width:1080px;margin:0 auto;padding:8px 14px;gap:6px;flex-wrap:wrap;
+border-top:1px solid var(--line)}
+.pan.open{display:flex}
+.pan input[type=search]{flex:1 1 150px;min-width:0;padding:5px 9px;border:1px solid var(--line);border-radius:5px;background:var(--card)}
+.pan select{padding:5px 7px;border:1px solid var(--line);border-radius:5px;background:var(--card);font-size:13px}
+#actp button{flex:1 1 auto;padding:7px 11px;border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:5px;cursor:pointer;font-size:13px}
+#actp button.g{background:transparent;color:var(--ink)}
+.dy{color:var(--un);font-size:12px;flex:0 0 100%;text-align:center}
+main{max-width:1080px;margin:0 auto;padding:6px 10px 80px}
+
+.ct{margin:6px 0;background:var(--card);border:1px solid var(--line);border-radius:6px}
+.ct.new{border-color:#B9CEC4;box-shadow:inset 3px 0 0 var(--ger)}
+.ct.zero{background:#F7F8F7}
+.crow{display:flex;align-items:center;gap:7px;padding:7px 9px;min-height:38px}
+.gr{flex:none;width:22px;height:26px;display:grid;place-items:center;color:var(--rule);
+cursor:grab;touch-action:none;border-radius:4px;font-size:13px;user-select:none}
+.gr:active{cursor:grabbing;background:#EDF0EE}
+.cv{flex:none;width:18px;border:0;background:none;color:var(--mute);cursor:pointer;padding:0;font-size:11px;
+transition:transform .15s}
+.ct.shut .cv{transform:rotate(-90deg)}
+.ct.shut .body{display:none}
+.ix{font-variant-numeric:tabular-nums;color:var(--rule);font-size:12px;min-width:15px;text-align:right}
+.cn{font-weight:600;font-size:15.5px;flex:1 1 auto;min-width:60px}
+.cn:focus{outline:2px solid var(--kajo);border-radius:3px}
+.dd{display:flex;align-items:center;gap:3px;font-size:12px;color:var(--mute);flex:none}
+.dd input{width:40px;padding:3px;border:1px solid var(--line);border-radius:4px;text-align:center;font-variant-numeric:tabular-nums}
+.ct.zero .dd input{color:var(--mute)}
+.nn{flex:none;font-size:11.5px;color:var(--rule);font-variant-numeric:tabular-nums}
+.ic{flex:none;border:0;background:none;color:var(--rule);cursor:pointer;padding:3px 4px;font-size:12.5px;border-radius:4px}
+.ic:hover{color:var(--ink);background:#EDF0EE}
+.ic.on{color:var(--ink)}
+.ic.del:hover{color:var(--un)}
+.body{padding:0 9px 8px 30px}
+.why{margin:0 0 7px;font-size:12.5px;color:var(--mute);border-left:2px solid var(--line);padding-left:9px;max-width:78ch}
+.cno,.tno{display:none;width:100%;margin:0 0 8px;padding:6px 8px;border:1px solid var(--line);
+border-radius:5px;background:#FBFCFB;resize:vertical;min-height:34px;font-size:13.5px}
+.cno.open,.tno.open{display:block}
+
+.tree{border-left:1px solid var(--line);margin-left:2px}
+.tp{position:relative;padding:5px 0 5px 12px}
+.tp::before{content:"";position:absolute;left:0;top:17px;width:9px;height:1px;background:var(--line)}
+.tp.pfl::before,.tp.pfl2::before{background:var(--ger);height:2px;top:16px}
+.tp.un{opacity:.42}
+.tp.un .tn{text-decoration:line-through}
+.tr1{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tn{font-weight:500;flex:1 1 190px;min-width:0;cursor:pointer}
+.tn:focus{outline:2px solid var(--kajo);border-radius:3px;cursor:text}
+.bd{flex:none;font-size:10.5px;padding:1px 6px;border-radius:99px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+.bd.Neu{border-color:#A9C6B8;color:var(--ger);background:#F1F8F4}
+.bd.Claude{border-color:#C3D0DC;color:var(--kajo)}
+.bd.Knuffel{border-color:#E0CDA8;color:var(--knuf)}
+.bd.fl{background:#F5EEDA;border-color:#E2D2A8;color:var(--flag)}
+.bd.sg{border-style:dashed}
+.rt{display:flex;gap:5px;flex:none;align-items:center}
+.rt select{border:1px solid var(--line);border-radius:5px;padding:2px 6px;font-size:12px;background:var(--card);max-width:132px}
+.rt select[data-v=Pflicht]{border-left:3px solid var(--pfl)}
+.rt select[data-v=Gerne]{border-left:3px solid var(--ger)}
+.rt select[data-v=Optional]{border-left:3px solid var(--opt)}
+.rt select[data-v="Unerwünscht"]{border-left:3px solid var(--un)}
+.bd.sg.d{border-style:solid;border-color:#E2C089;color:var(--flag);background:#FBF6EA}
+.rt select[data-v=Pflicht]{color:var(--pfl);font-weight:600}
+.rt select[data-v=Gerne]{color:var(--ger)}
+.rt select[data-v=Optional]{color:var(--opt)}
+.rt select[data-v="Unerwünscht"]{color:var(--un)}
+.th{margin:5px 0 0;font-size:12.5px;color:var(--mute);max-width:78ch;display:none}
+.th.open{display:block}
+.th.warn{color:var(--un)}
+.add{display:block;width:100%;margin:6px 0 0;border:1px dashed var(--line);background:transparent;
+border-radius:5px;cursor:pointer;padding:6px;color:var(--rule);font-size:13px}
+.add:hover{border-color:var(--ink);color:var(--ink)}
+.addc{margin:10px 0 0}
+.drag{position:fixed;z-index:99;pointer-events:none;background:var(--card);border:1px solid var(--ink);
+border-radius:5px;padding:5px 11px;font-size:13.5px;box-shadow:0 6px 18px rgba(0,0,0,.16);opacity:.95;max-width:70vw;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mk{height:0;border-top:2px solid var(--kajo);margin:-1px 0}
+.ct.hot{outline:2px solid var(--kajo);outline-offset:-1px}
+footer{max-width:1080px;margin:0 auto;padding:0 14px 50px;font-size:12.5px;color:var(--mute)}
+footer hr{border:0;border-top:1px solid var(--line);margin:0 0 12px}
+footer button{border:0;background:none;color:var(--un);text-decoration:underline;cursor:pointer;padding:0;font-size:12.5px}
+@media(max-width:640px){
+ main{padding:4px 7px 70px} .body{padding-left:22px} .tp{padding-left:10px}
+ .rt select{max-width:120px}
+ .cn{font-size:15px} .th{font-size:12.5px}
+}
+@media print{header,.gr,.ic,.add,.addc,footer button{display:none}
+body{background:#fff}.ct{break-inside:avoid}.tp.un{display:none}.th,.cno,.tno{display:block}}
+</style></head><body>
+<header>
+ <div class="hd"><span class="br">China 2027</span>
+  <span class="bud" id="bud"><b id="sum">0</b>/<input type="number" id="tgt" min="1" max="60" value="21"> N</span>
+  <button class="tg" id="tf">Filter</button><button class="tg" id="ta">Datei</button></div>
+ <div class="pan" id="tools">
+  <input type="search" id="q" placeholder="Suchen…" aria-label="Suchen">
+  <select id="fs"><option value="">Claudes Vorschlag: alle</option><option>Pflicht</option><option>Gerne</option><option>Optional</option></select>
+  <select id="fq"><option value="">Quelle: alle</option><option>Beide</option><option>Claude</option><option>Knuffel</option><option>Neu</option></select>
+  <select id="fst"><option value="">Bewertung: alle</option><option value="open">noch offen</option><option>Pflicht</option><option>Gerne</option><option>Optional</option><option>Unerwünscht</option><option value="dif">weicht von Claude ab</option></select>
+  <select id="ff"><option value="">Hinweise: alle</option><option value="!">nur Höhe</option><option value="?">nur ungeprüft</option></select>
+ </div>
+ <div class="pan" id="actp"><span class="dy" id="dirty" hidden>nicht gespeichert</span>
+  <button id="save">Stand speichern</button><button class="g" id="md">Für Claude</button>
+  <button class="g" id="csv">CSV</button><button class="g" id="exp">Alle auf/zu</button></div></header>
+<main id="main"></main>
+<footer><hr>
+<p>Ziehen am Griff ≡ verschiebt Städte und Trips — Trips lassen sich auch in eine andere Stadt ziehen.
+Namen anklicken benennt um, ✕ löscht, ＋ ergänzt. Nächte auf 0 heißt: bleibt in der Liste, zählt nicht mit.</p>
+<p>Grün markiert sind meine neuen Vorschläge. „Für Claude“ erzeugt eine Textdatei mit euren Bewertungen und Notizen.
+<button id="reset">Auf Claudes Vorschlag zurücksetzen</button></p></footer>
+<script id="saved-data" type="application/json">null</script>
+<script id="init-data" type="application/json">{"target": 21, "cities": [{"id": "c0", "n": "Peking", "d": 4, "w": "Höchste Highlight-Dichte der Route. Mit Jetlag bleiben real drei Tage: Mauer ein ganzer Tag, Verbotene Stadt ein ganzer Tag.", "no": "", "t": [{"id": "t1", "n": "Verbotene Stadt + Jingshan-Hügel", "s": "Pflicht", "f": "", "q": "Beide", "h": "Blick von oben vom Jingshan. 3-4 h nur Hallen, 5+ h mit Jingshan. Zeitfenster-Ticket nötig.", "r": "", "no": ""}, {"id": "t2", "n": "Große Mauer Mutianyu", "s": "Pflicht", "f": "", "q": "Beide", "h": "Gondel hoch, Rodelbahn runter, mit Guide und Fahrer. Ganzer Tag. Badaling zu voll, Jinshanling als Alternative.", "r": "", "no": ""}, {"id": "t3", "n": "Himmelstempel früh morgens", "s": "Pflicht", "f": "", "q": "Beide", "h": "Tai Chi und Tanz der Einheimischen — nur früh.", "r": "", "no": ""}, {"id": "t4", "n": "Sommerpalast + Bootsfahrt", "s": "Gerne", "f": "", "q": "Beide", "h": "Kurz 3-4 h, lang mit Tempeln und Boot 5-6+ h.", "r": "", "no": ""}, {"id": "t5", "n": "Hutongs: Rikscha, Kalligrafie- oder Jiaozi-Kurs", "s": "Gerne", "f": "", "q": "Beide", "h": "Knuffel nennt zusätzlich Qianmen-Straße.", "r": "", "no": ""}, {"id": "t6", "n": "Peking-Ente-Dinner", "s": "Gerne", "f": "", "q": "Beide", "h": "Von Knuffel ausdrücklich markiert.", "r": "", "no": ""}, {"id": "t7", "n": "Lama-Tempel Yonghe", "s": "Gerne", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t8", "n": "Beihai-Park", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu. Liegt neben der Verbotenen Stadt, lässt sich mit Tag 1 verbinden.", "r": "", "no": ""}, {"id": "t9", "n": "Platz des Himmlischen Friedens", "s": "Optional", "f": "", "q": "Beide", "h": "Knuffel koppelt ihn ans Nationalmuseum.", "r": "", "no": ""}, {"id": "t10", "n": "Nationalmuseum", "s": "Optional", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t11", "n": "Wangfujing Straße", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu. Einkaufsstrasse.", "r": "", "no": ""}, {"id": "t12", "n": "798 Art District", "s": "Optional", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t13", "n": "Ming-Gräber", "s": "Optional", "f": "", "q": "Claude", "h": "Meist mit der Mauer kombiniert.", "r": "", "no": ""}, {"id": "t14", "n": "Gubei Water Town + Simatai-Mauer bei Nacht", "s": "Gerne", "f": "", "q": "Neu", "h": "Neu. Der einzige nachts beleuchtete Mauerabschnitt Chinas, Zugang per Seilbahn. Wassserstadt am Fuß. Braucht einen ganzen Nachmittag und Abend — Alternative zu Mutianyu, nicht zusätzlich.", "r": "", "no": ""}, {"id": "t15", "n": "Shichahai und Houhai am Abend", "s": "Optional", "f": "", "q": "Neu", "h": "Neu. Seenlandschaft mitten in den Hutongs, abends belebt.", "r": "", "no": ""}, {"id": "t16", "n": "China Science and Technology Museum", "s": "Optional", "f": "", "q": "Neu", "h": "Neu. Technikinteresse, gut für einen Regentag.", "r": "", "no": ""}]}, {"id": "c1", "n": "Xi'an", "d": 2, "w": "Minimum, funktioniert aber: Ankunft mittags, nachmittags Stadtmauer und Muslimviertel, ein voller Tag Terrakotta.", "no": "", "t": [{"id": "t17", "n": "Terrakotta-Armee mit Guide", "s": "Pflicht", "f": "", "q": "Beide", "h": "Halber Tag. Knuffel: Pit 1 um 18 Uhr oder ganz früh. Zeitfenster-Ticket nötig.", "r": "", "no": ""}, {"id": "t18", "n": "Stadtmauer per Rad", "s": "Pflicht", "f": "", "q": "Beide", "h": "14 km Runde, Mauer 14 m breit — höhenmäßig unkritisch.", "r": "", "no": ""}, {"id": "t19", "n": "Muslimviertel am Abend", "s": "Gerne", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t20", "n": "Han Yang Ling", "s": "Gerne", "f": "", "q": "Claude", "h": "Glasboden über offenen Grabgruben, kaum Touristen. Fehlt bei Knuffel.", "r": "", "no": ""}, {"id": "t21", "n": "Glocken- und Trommelturm", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu. Liegt im Zentrum, kombinierbar mit Muslimviertel.", "r": "", "no": ""}, {"id": "t22", "n": "Große Moschee von Xi'an", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu. Direkt im Muslimviertel.", "r": "", "no": ""}, {"id": "t23", "n": "Große Wildganspagode", "s": "Optional", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t24", "n": "Shaanxi Geschichtsmuseum", "s": "Optional", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t25", "n": "Da Tang Everbright City", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu. Beleuchtete Tang-Themenmeile am Abend.", "r": "", "no": ""}, {"id": "t26", "n": "Hanfu Shooting", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu. Fotoshooting in historischer Tracht.", "r": "", "no": ""}, {"id": "t27", "n": "Tang-Dynastie-Show", "s": "Optional", "f": "", "q": "Claude", "h": "Touristenfolklore — nicht empfohlen.", "r": "", "no": ""}, {"id": "t28", "n": "Hua Shan", "s": "Optional", "f": "!", "q": "Knuffel", "h": "KONFLIKT: von Claude gestrichen. Bretterstege sind schmal und ungesichert mit Abgrund — genau euer Ausschlusskriterium. Kostet zusätzlich einen ganzen Tag.", "r": "", "no": ""}]}, {"id": "cn2", "n": "Pingyao", "d": 1, "w": "Neu. Liegt direkt an der Schnellzugstrecke Peking–Xi'an, kostet also keinen Umweg, nur eine Nacht. Vollständig erhaltene Ming-Stadt mit Mauer, UNESCO. Die Hof-Heritage-Hotels dort treffen euer Hotelprofil besser als alles andere auf der Route.", "no": "", "new": 1, "t": [{"id": "t123", "n": "Stadtmauer-Rundgang Pingyao", "s": "Gerne", "f": "", "q": "Neu", "h": "6 km geschlossener Mauerring aus dem 14. Jahrhundert, breit und gesichert.", "r": "", "no": ""}, {"id": "t124", "n": "Rishengchang — Chinas erste Bank", "s": "Gerne", "f": "", "q": "Neu", "h": "Ursprung des chinesischen Bankwesens, 1823. Kleines, sehr gut erhaltenes Hofmuseum.", "r": "", "no": ""}, {"id": "t125", "n": "Altstadt bei Nacht", "s": "Pflicht", "f": "", "q": "Neu", "h": "Der eigentliche Grund für die Übernachtung. Tagesgäste sind abends weg.", "r": "", "no": ""}, {"id": "t126", "n": "Übernachtung im Hof-Heritage-Hotel", "s": "Gerne", "f": "", "q": "Neu", "h": "Anders als in Pekings Hutongs sind die Höfe hier ruhig — keine Großstadt drumherum.", "r": "", "no": ""}]}, {"id": "cn3", "n": "Datong", "d": 0, "w": "Neu, als Kandidat ohne Nächte. Yungang-Grotten sind Weltklasse, kosten aber zwei Nächte und einen Nordabstecher vor Pingyao. Nur sinnvoll, wenn ihr über 21 Nächte hinausgeht.", "no": "", "new": 1, "t": [{"id": "t127", "n": "Yungang-Grotten", "s": "Gerne", "f": "", "q": "Neu", "h": "51.000 Buddhafiguren in 45 Höhlen, UNESCO. Ebenerdig, keine Höhenexposition.", "r": "", "no": ""}, {"id": "t128", "n": "Hängendes Kloster Xuankong Si", "s": "Optional", "f": "!", "q": "Neu", "h": "An die Felswand gebaut, schmale Holzstege über dem Abgrund. Nach eurem Profil kritisch — von unten ansehen geht auch.", "r": "", "no": ""}, {"id": "t129", "n": "Holzpagode Yingxian", "s": "Optional", "f": "", "q": "Neu", "h": "Älteste Holzpagode der Welt, 1056. Aufstieg nicht nötig.", "r": "", "no": ""}]}, {"id": "c2", "n": "Jiuzhaigou", "d": 0, "w": "Kandidat ohne Nächte. 450 km Sackgasse ab Chengdu, mindestens drei Nächte, 2.000–3.300 m Höhe.", "no": "", "t": [{"id": "t29", "n": "Jiuzhaigou Nationalpark", "s": "Optional", "f": "?", "q": "Knuffel", "h": "UNGEPRÜFT. Liegt nicht zwischen Xi'an und Chengdu, sondern ca. 450 km nordwestlich von Chengdu als Sackgasse. Kostet mind. 3 Nächte. Höhe 2.000-3.300 m.", "r": "", "no": ""}]}, {"id": "c3", "n": "Chengdu", "d": 3, "w": "Pandas früh morgens, Sanxingdui als Halbtagestour, Teehaus und Oper. Mit zwei Nächten fiele Sanxingdui raus.", "no": "", "t": [{"id": "t30", "n": "Panda-Forschungsbasis", "s": "Pflicht", "f": "", "q": "Beide", "h": "Ankunft 7:30 vor den Reisebussen.", "r": "", "no": ""}, {"id": "t31", "n": "Sanxingdui-Museum", "s": "Pflicht", "f": "", "q": "Claude", "h": "Größte LÜCKE bei Knuffel. Bronzemasken einer eigenständigen Kultur, Halbtagestour. Aus Claudes Sicht das eindrücklichste Museum Chinas.", "r": "", "no": ""}, {"id": "t32", "n": "Renmin-Park Teehaus, Ohrenreinigung, Mahjong", "s": "Gerne", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t33", "n": "Sichuan-Oper mit Bianlian (Gesichtswandeln)", "s": "Gerne", "f": "", "q": "Claude", "h": "Fehlt bei Knuffel.", "r": "", "no": ""}, {"id": "t34", "n": "Hotpot oder Kochkurs", "s": "Gerne", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t35", "n": "Wuhou-Tempel", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu. Liegt direkt an der Jinli-Straße.", "r": "", "no": ""}, {"id": "t36", "n": "Jinli-Straße", "s": "Optional", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t37", "n": "Kuanzhai Xiangzi Gassen", "s": "Optional", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t38", "n": "Wenshu Yuan Kloster", "s": "Optional", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t39", "n": "Dujiangyan Bewässerungssystem", "s": "Optional", "f": "", "q": "Beide", "h": "UNESCO, 2.200 Jahre alte Ingenieurskunst.", "r": "", "no": ""}, {"id": "t40", "n": "Chunxi Road & Taikoo Li", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t41", "n": "SKP Chengdu", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu. Unterirdischer Luxus-Shoppingkomplex mit farbigen Türmen.", "r": "", "no": ""}, {"id": "t42", "n": "Tianfu International Finance Centre", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t43", "n": "Anshun Bridge", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu. Beleuchtete Brücke am Abend.", "r": "", "no": ""}, {"id": "t44", "n": "Magic Mall", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t45", "n": "24h Spa Cheersum", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t46", "n": "Fushan Courtyard", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t47", "n": "Qingcheng Shan", "s": "Optional", "f": "?", "q": "Knuffel", "h": "Neu. Taoistischer Berg, meist mit Dujiangyan kombiniert. Bergprogramm — Höhenprofil noch zu prüfen.", "r": "", "no": ""}, {"id": "t48", "n": "Blue Tears", "s": "Optional", "f": "?", "q": "Knuffel", "h": "Neu. Von Claude nicht verifiziert — Ort und Saison unklar.", "r": "", "no": ""}, {"id": "t49", "n": "Leshan Großer Buddha", "s": "Gerne", "f": "!", "q": "Beide", "h": "Nur vom Boot. Der Abstieg ist eine schmale, steile Felstreppe.", "r": "", "no": ""}, {"id": "t50", "n": "Emeishan", "s": "Optional", "f": "!", "q": "Claude", "h": "Gestrichen — ganzer Tag Bergprogramm.", "r": "", "no": ""}]}, {"id": "c4", "n": "Chongqing", "d": 1, "w": "Ein Abend und ein Vormittag reichen. Muss auf einen Samstag fallen — die Drohnenshow läuft nur dann.", "no": "", "t": [{"id": "t51", "n": "Größte Drohnenshow der Welt", "s": "Pflicht", "f": "", "q": "Knuffel", "h": "HARTE RANDBEDINGUNG: nur samstags. Taktet die gesamte Reise. Vor Buchung für 2027 verifizieren.", "r": "", "no": ""}, {"id": "t52", "n": "Hongyadong / Hongya Cave bei Nacht", "s": "Pflicht", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t53", "n": "Liziba Station — Metro fährt durchs Hochhaus", "s": "Gerne", "f": "", "q": "Beide", "h": "Technik.", "r": "", "no": ""}, {"id": "t54", "n": "Jiefangbei / Liberation Monument", "s": "Gerne", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t55", "n": "Hotpot am Ursprungsort", "s": "Gerne", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t56", "n": "Raffles City & Chaotianmen", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu. Skybridge mit Aussicht.", "r": "", "no": ""}, {"id": "t57", "n": "Yangtze River Cable Car", "s": "Optional", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t58", "n": "Ciqikou Ancient Town", "s": "Optional", "f": "", "q": "Beide", "h": "", "r": "", "no": ""}, {"id": "t59", "n": "Eling Park & Mountain City Alley", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t60", "n": "Dazu-Felszeichnungen", "s": "Optional", "f": "?", "q": "Knuffel", "h": "Neu. UNESCO, ca. 2 h ausserhalb. Kostet einen halben bis ganzen Tag.", "r": "", "no": ""}, {"id": "t61", "n": "Wulong Karst Nationalpark", "s": "Optional", "f": "", "q": "Beide", "h": "Von beiden als zu weit ausserhalb eingestuft. Würde +1 Nacht kosten.", "r": "", "no": ""}, {"id": "t62", "n": "Geisterstadt Fengdu", "s": "Optional", "f": "", "q": "Knuffel", "h": "Von Knuffel selbst als zu weit ausserhalb markiert.", "r": "", "no": ""}, {"id": "t63", "n": "Kuixinglou — Ausgang im 22. Stock auf Straßenniveau", "s": "Gerne", "f": "", "q": "Neu", "h": "Neu. Gebäude, dessen oberste Etage direkt auf eine Straße mündet. Zeigt Chongqings Topografie besser als jede Aussichtsplattform.", "r": "", "no": ""}]}, {"id": "c5", "n": "Zhangjiajie", "d": 3, "w": "Wulingyuan braucht zwei Tage, Tianmen einen. Der dritte Tag ist zugleich Rückversicherung gegen Nebel.", "no": "", "t": [{"id": "t64", "n": "Yuanjiajie / Avatar Hallelujah Mountain", "s": "Pflicht", "f": "", "q": "Claude", "h": "Stege durchgehend mit Geländer. Fehlt in Knuffels Liste.", "r": "", "no": ""}, {"id": "t65", "n": "Tianzi Mountain", "s": "Pflicht", "f": "", "q": "Claude", "h": "Fehlt in Knuffels Liste.", "r": "", "no": ""}, {"id": "t66", "n": "Tianmen Mountain + Seilbahn", "s": "Gerne", "f": "", "q": "Beide", "h": "Knuffel nennt es 'Gate to Heaven'.", "r": "", "no": ""}, {"id": "t67", "n": "Bailong-Aufzug", "s": "Gerne", "f": "", "q": "Claude", "h": "Geschlossene Kabine, 326 m, 2 Minuten. Unkritisch für euer Profil.", "r": "", "no": ""}, {"id": "t68", "n": "Golden Whip Stream", "s": "Gerne", "f": "", "q": "Claude", "h": "Flache Talwanderung.", "r": "", "no": ""}, {"id": "t69", "n": "72 Wonder Tower", "s": "Optional", "f": "?", "q": "Knuffel", "h": "Neu. Von Claude nicht verifiziert.", "r": "", "no": ""}, {"id": "t70", "n": "Glasbrücke Grand Canyon", "s": "Optional", "f": "", "q": "Claude", "h": "6 m breit, hohe Geländer, teils opake Bahnen. Machbar.", "r": "", "no": ""}, {"id": "t71", "n": "Ten-Mile Gallery (Kleinbahn)", "s": "Optional", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t72", "n": "Coiling Dragon Cliff Glasstege am Tianmen", "s": "Optional", "f": "!", "q": "Claude", "h": "Schmal und exponiert. Der Normalweg läuft parallel — Umgehung möglich.", "r": "", "no": ""}, {"id": "t73", "n": "Huanglong-Höhle (Gelber Drache)", "s": "Gerne", "f": "", "q": "Neu", "h": "Neu und aus meiner Sicht wichtig: die einzige wetterunabhängige Attraktion vor Ort. Bei über 200 Nebel- oder Regentagen im Jahr braucht ihr einen Plan B, der nicht von Sicht abhängt.", "r": "", "no": ""}, {"id": "t74", "n": "Baofeng-See", "s": "Optional", "f": "", "q": "Neu", "h": "Neu. Bootsfahrt zwischen Karstfelsen, funktioniert auch bei diesiger Sicht.", "r": "", "no": ""}]}, {"id": "c6", "n": "Fenghuang", "d": 1, "w": "Basis für den Nachmittagsausflug nach Furong. Löst das Hotelproblem, das Furong selbst hat.", "no": "", "t": [{"id": "t75", "n": "Altstadt am Tuo-Fluss, Abendbeleuchtung", "s": "Pflicht", "f": "", "q": "Knuffel", "h": "NEU und aus Claudes Sicht klar ja. Löst die bekannte Schwachstelle 'kaum brauchbare Hotels in Furong'.", "r": "", "no": ""}, {"id": "t76", "n": "Stelzenhäuser am Tuo-Fluss bei Nacht", "s": "Pflicht", "f": "", "q": "Neu", "h": "Neu. Das ist der eigentliche Kern von Fenghuang — die Diaojiaolou spiegeln sich beleuchtet im Wasser.", "r": "", "no": ""}, {"id": "t77", "n": "Bootsfahrt auf dem Tuo-Fluss", "s": "Gerne", "f": "", "q": "Neu", "h": "Neu. Flache Holzboote, etwa 30 Minuten.", "r": "", "no": ""}, {"id": "t78", "n": "Hongqiao-Brücke", "s": "Gerne", "f": "", "q": "Neu", "h": "Neu. Überdachte Brücke aus der Ming-Zeit mit Aussichtsebene.", "r": "", "no": ""}, {"id": "t79", "n": "Südchinesische Mauer", "s": "Optional", "f": "", "q": "Neu", "h": "Neu. Ming-Grenzmauer, etwa 13 km außerhalb.", "r": "", "no": ""}]}, {"id": "c7", "n": "Furong", "d": 0, "w": "Tagesausflug ab Fenghuang, 35 Minuten mit dem Schnellzug.", "no": "", "t": [{"id": "t80", "n": "Abendbeleuchtung der Altstadt", "s": "Pflicht", "f": "", "q": "Beide", "h": "Der eigentliche Grund für den Nachmittagsbesuch.", "r": "", "no": ""}, {"id": "t81", "n": "Wasserfall + Weg hinter dem Wasserfall", "s": "Pflicht", "f": "", "q": "Beide", "h": "Knuffel ergänzt den Weg hinter dem Wasserfall. Am spektakulärsten Juni-September — im Oktober schwächer.", "r": "", "no": ""}, {"id": "t82", "n": "Aussichtsplattform des Wasserfalls", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t83", "n": "Pfahlbauten / Diaojiaolou", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t84", "n": "Tusi-Platz", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t85", "n": "Tusi-Palast & Ahnentempel", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t86", "n": "Tuwang-Brücke", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t87", "n": "Wuli-Schieferstraße", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t88", "n": "Youyang-Palast", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu. Inzwischen Hotel mit Teehaus und Aussichtsplattform.", "r": "", "no": ""}, {"id": "t89", "n": "Show in der Stadt", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t90", "n": "Tujia-Kultur, lokale Küche", "s": "Optional", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}]}, {"id": "c8", "n": "Guilin", "d": 1, "w": "Ankunft und Start der Li-Fluss-Fahrt. Ohne Longji braucht Guilin selbst kaum Zeit.", "no": "", "t": [{"id": "t91", "n": "Li-Fluss-Kreuzfahrt Guilin nach Yangshuo", "s": "Pflicht", "f": "", "q": "Beide", "h": "Der Kern der Region.", "r": "", "no": ""}, {"id": "t92", "n": "Longji-Reisterrassen (Longsheng)", "s": "Optional", "f": "?", "q": "Beide", "h": "WIDERSPRUCH in Knuffels Recherche: unter 'Optional' steht 'im Herbst streichen', im Tagesplan Guilin steht sie drin. Claude bestätigt: im Oktober nach dem 15. abgeerntet und braun.", "r": "", "no": ""}, {"id": "t93", "n": "Schilfrohrflötenhöhle", "s": "Optional", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t94", "n": "Sonne- und Mond-Pagoden am Shan-See bei Nacht", "s": "Gerne", "f": "", "q": "Neu", "h": "Neu. Beleuchtete Zwillingspagoden im Wasser — das Motiv von Guilin selbst, fußläufig vom Zentrum.", "r": "", "no": ""}, {"id": "t95", "n": "Jingjiang-Fürstenpalast und Solitary Beauty Peak", "s": "Optional", "f": "", "q": "Neu", "h": "Neu. Ming-Palastanlage. Der Aufstieg auf den Felsen ist eine gesicherte Steintreppe, aber steil — auch von unten sehenswert.", "r": "", "no": ""}]}, {"id": "c9", "n": "Yangshuo", "d": 3, "w": "Der landschaftliche Kern der Region: Xingping, Yulong-Fluss, Kormoranfischer.", "no": "", "t": [{"id": "t96", "n": "Xingping — der Blick vom 20-Yuan-Schein", "s": "Pflicht", "f": "", "q": "Claude", "h": "Fehlt bei Knuffel.", "r": "", "no": ""}, {"id": "t97", "n": "Yulong-Fluss: Radtour oder Bambusfloss", "s": "Gerne", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t98", "n": "Impression Liu Sanjie", "s": "Gerne", "f": "", "q": "Claude", "h": "Freilichtshow auf dem Fluss, Regie Zhang Yimou.", "r": "", "no": ""}, {"id": "t99", "n": "Kormoranfischer bei Nacht", "s": "Gerne", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t100", "n": "Ji Mi You Yuan Cafe", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t101", "n": "Moon Hill", "s": "Optional", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t102", "n": "West Street Yangshuo", "s": "Optional", "f": "", "q": "Beide", "h": "Touristisch.", "r": "", "no": ""}, {"id": "t103", "n": "Xianggong-Hügel zum Sonnenaufgang", "s": "Gerne", "f": "", "q": "Neu", "h": "Neu. Der Blick auf die große Li-Flussschleife. Kurzer Aufstieg über gesicherte Stufen, etwa 20 Minuten.", "r": "", "no": ""}]}, {"id": "c10", "n": "Huangshan", "d": 0, "w": "Kandidat ohne Nächte. Großer Umweg plus exponierte Grate.", "no": "", "t": [{"id": "t104", "n": "Huangshan (Gelbes Gebirge)", "s": "Optional", "f": "?", "q": "Knuffel", "h": "UNGEPRÜFT. Zwei Einwände: grosser Umweg, und Bergprogramm mit exponierten Graten. Nach eurem Höhenprofil heikel.", "r": "", "no": ""}]}, {"id": "c11", "n": "Hangzhou", "d": 0, "w": "Kandidat ohne Nächte. Konkurriert mit dem Suzhou-Tagesausflug ab Shanghai.", "no": "", "t": [{"id": "t105", "n": "Hangzhou als Tagesausflug ab Shanghai", "s": "Optional", "f": "?", "q": "Beide", "h": "War bereits einmal gestrichen. Konkurriert direkt mit Suzhou — nur eines von beiden passt.", "r": "", "no": ""}, {"id": "t106", "n": "Größtes Wohnhaus der Welt", "s": "Optional", "f": "?", "q": "Knuffel", "h": "Neu. Regent International in Qianjiang, Hangzhou.", "r": "", "no": ""}]}, {"id": "c12", "n": "Shanghai", "d": 3, "w": "Zwei Tage Stadt plus ein Tag Suzhou. Bei zwei Nächten fällt Suzhou weg.", "no": "", "t": [{"id": "t107", "n": "The Bund & Skyline", "s": "Pflicht", "f": "", "q": "Beide", "h": "Tag und Nacht.", "r": "", "no": ""}, {"id": "t108", "n": "Shanghai Tower Aussicht", "s": "Pflicht", "f": "", "q": "Claude", "h": "Geschlossen, kein Glasboden — die entspannte Wahl.", "r": "", "no": ""}, {"id": "t109", "n": "Maglev, 430 km/h Flughafenbahn", "s": "Gerne", "f": "", "q": "Claude", "h": "Technik. Fehlt bei Knuffel.", "r": "", "no": ""}, {"id": "t110", "n": "Yu-Garten & Altstadt", "s": "Gerne", "f": "", "q": "Claude", "h": "Fehlt bei Knuffel.", "r": "", "no": ""}, {"id": "t111", "n": "Französisches Viertel / Xintiandi", "s": "Gerne", "f": "", "q": "Claude", "h": "", "r": "", "no": ""}, {"id": "t112", "n": "Shanghai Museum East", "s": "Gerne", "f": "", "q": "Claude", "h": "Neubau.", "r": "", "no": ""}, {"id": "t113", "n": "Suzhou Tagesausflug", "s": "Gerne", "f": "", "q": "Claude", "h": "UNESCO-Gärten, 30 Min Zug. Konkurriert mit Hangzhou.", "r": "", "no": ""}, {"id": "t114", "n": "White Magnolia Observation Deck", "s": "Gerne", "f": "", "q": "Knuffel", "h": "Neu. Alternative Aussichtsplattform.", "r": "", "no": ""}, {"id": "t115", "n": "1000 Trees Mall", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu. Architektur von Heatherwick.", "r": "", "no": ""}, {"id": "t116", "n": "Shanghai Greenhouse Garden", "s": "Optional", "f": "", "q": "Knuffel", "h": "Neu.", "r": "", "no": ""}, {"id": "t117", "n": "Zhujiajiao Wasserstadt", "s": "Optional", "f": "", "q": "Claude", "h": "Schwächer als Suzhou.", "r": "", "no": ""}, {"id": "t118", "n": "Akrobatik-Show", "s": "Optional", "f": "", "q": "Claude", "h": "Gut, aber austauschbar.", "r": "", "no": ""}, {"id": "t119", "n": "Nanjing Road", "s": "Optional", "f": "", "q": "Claude", "h": "Shopping.", "r": "", "no": ""}, {"id": "t120", "n": "Autonome Shuttles / Smart-City-Bezirk", "s": "Optional", "f": "", "q": "Claude", "h": "Technik.", "r": "", "no": ""}, {"id": "t121", "n": "SWFC Aussichtsplattform", "s": "Optional", "f": "!", "q": "Claude", "h": "Glasboden im 100. Stock. Shanghai Tower ist die entspanntere Wahl.", "r": "", "no": ""}, {"id": "t122", "n": "Shanghai Astronomy Museum", "s": "Gerne", "f": "", "q": "Neu", "h": "Neu. Größtes Astronomiemuseum der Welt, Architektur ohne eine einzige gerade Linie. Trifft Technik und Architektur gleichzeitig.", "r": "", "no": ""}]}]}</script>
+<script>
+const INIT=JSON.parse(document.getElementById('init-data').textContent);
+let SV=null; try{SV=JSON.parse(document.getElementById('saved-data').textContent);}catch(e){}
+let S=SV||structuredClone(INIT), dirty=false, uid=9000, shut={}, open1={};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const LV=['','Unerwünscht','Optional','Gerne','Pflicht'], RK={'Unerwünscht':0,'Optional':1,'Gerne':2,'Pflicht':3};
+const mark=()=>{dirty=true;$('#dirty').hidden=false;};
+const cityOf=id=>S.cities.find(c=>c.id===id);
+const tripOf=(ci,ti)=>cityOf(ci).t.find(t=>t.id===ti);
+
+const dif=t=>!!t.r&&t.r!==t.s;
+function st(t){
+ if(t.r==='Unerwünscht') return 'un';
+ if(t.r==='Pflicht') return 'pfl';
+ return '';
+}
+function pass(t){
+ const q=$('#q').value.trim().toLowerCase();
+ if(q&&!((t.n+' '+t.h).toLowerCase().includes(q))) return false;
+ if($('#fs').value&&t.s!==$('#fs').value) return false;
+ if($('#fq').value&&t.q!==$('#fq').value) return false;
+ if($('#ff').value&&t.f!==$('#ff').value) return false;
+ const f=$('#fst').value;
+ if(f==='open'&&t.r) return false;
+ if(f==='dif'&&!dif(t)) return false;
+ if(f&&f!=='open'&&f!=='dif'&&t.r!==f) return false;
+ return true;
+}
+const sel=(c,t,v)=>`<select data-v="${v}" data-s="${c}|${t}" aria-label="Bewertung">`+
+ LV.map(o=>`<option value="${o}"${o===v?' selected':''}>${o||'bewerten …'}</option>`).join('')+'</select>';
+
+function trip(c,t){
+ const warn=/KONFLIKT|UNGEPRÜFT|LÜCKE|WIDERSPRUCH|RANDBEDINGUNG|Größte/.test(t.h), key=c.id+'|'+t.id;
+ return `<div class="tp ${st(t)}" data-tp="${key}">
+  <div class="tr1"><span class="gr" data-drag="t|${key}">≡</span>
+   <span class="tn" data-tn="${key}">${esc(t.n)}</span>
+   ${t.f?`<span class="bd fl">${t.f==='!'?'Höhe':'ungeprüft'}</span>`:''}
+   <span class="bd sg${dif(t)?' d':''}">Claude: ${t.s}</span><span class="bd ${t.q}">${t.q}</span>
+   <span class="rt">${sel(c.id,t.id,t.r)}</span>
+   <button class="ic${t.no?' on':''}" data-no="${key}" title="Notiz">✎</button>
+   <button class="ic del" data-dt="${key}" title="Löschen">✕</button></div>
+  ${t.h?`<p class="th${open1[key]?' open':''}${warn?' warn':''}">${esc(t.h)}</p>`:''}
+  <textarea class="tno${t.no?' open':''}" data-tno="${key}" placeholder="Notiz…">${esc(t.no)}</textarea></div>`;
+}
+function render(){
+ let h='';
+ S.cities.forEach((c,i)=>{
+  const vis=c.t.filter(pass);
+  h+=`<section class="ct${c.new?' new':''}${+c.d===0?' zero':''}${shut[c.id]?' shut':''}" data-c="${c.id}">
+   <div class="crow"><span class="gr" data-drag="c|${c.id}">≡</span>
+    <button class="cv" data-cv="${c.id}">▾</button><span class="ix">${i+1}</span>
+    <span class="cn" contenteditable="plaintext-only" data-cn="${c.id}">${esc(c.n)}</span>
+    <span class="dd"><input type="number" min="0" max="30" value="${c.d}" data-d="${c.id}">N</span>
+    <span class="nn">${vis.length===c.t.length?c.t.length:vis.length+'/'+c.t.length}</span>
+    <button class="ic${c.no?' on':''}" data-cno="${c.id}" title="Notiz">✎</button>
+    <button class="ic del" data-dc="${c.id}" title="Löschen">✕</button></div>
+   <div class="body">${c.w?`<p class="why">${esc(c.w)}</p>`:''}
+    <textarea class="cno${c.no?' open':''}" data-cnt="${c.id}" placeholder="Notiz zu ${esc(c.n)}…">${esc(c.no)}</textarea>
+    <div class="tree" data-tree="${c.id}">${vis.map(t=>trip(c,t)).join('')}</div>
+    <button class="add" data-at="${c.id}">＋ Trip</button></div></section>`;
+ });
+ $('#main').innerHTML=h+'<button class="add addc" id="ac">＋ Stadt</button>';
+ sum();
+}
+function sum(){
+ const n=S.cities.reduce((a,c)=>a+(+c.d||0),0);
+ $('#sum').textContent=n; $('#bud').classList.toggle('over',n>(+S.target||21));
+}
+document.addEventListener('click',e=>{
+ const th=e.target.closest('.tn');
+ if(th&&!th.isContentEditable){ const p=th.closest('.tp').querySelector('.th'); if(p){p.classList.toggle('open');open1[th.dataset.tn]=p.classList.contains('open');} return;}
+ const b=e.target.closest('button'); if(!b) return; const d=b.dataset;
+ if(b.id==='tf'||b.id==='ta'){const a=$(b.id==='tf'?'#tools':'#actp'),o=$(b.id==='tf'?'#actp':'#tools');
+  a.classList.toggle('open');o.classList.remove('open');
+  b.classList.toggle('on',a.classList.contains('open'));$(b.id==='tf'?'#ta':'#tf').classList.remove('on');return;}
+ if(d.cv){shut[d.cv]=!shut[d.cv];b.closest('.ct').classList.toggle('shut');return;}
+ if(b.id==='exp'){const any=S.cities.some(c=>!shut[c.id]);S.cities.forEach(c=>shut[c.id]=any);render();return;}
+ if(d.no){const t=e.target.closest('.tp').querySelector('.tno');t.classList.toggle('open');if(t.classList.contains('open'))t.focus();b.classList.toggle('on');return;}
+ if(d.cno){const t=b.closest('.ct').querySelector('.cno');t.classList.toggle('open');if(t.classList.contains('open'))t.focus();return;}
+ if(d.dt){const[ci,ti]=d.dt.split('|'),c=cityOf(ci),t=tripOf(ci,ti);
+  if(confirm('„'+t.n+'“ löschen?')){c.t=c.t.filter(x=>x.id!==ti);mark();render();}return;}
+ if(d.dc){const c=cityOf(d.dc);
+  if(confirm(c.n+' mit '+c.t.length+' Trips löschen?')){S.cities=S.cities.filter(x=>x.id!==d.dc);mark();render();}return;}
+ if(d.at){const n=prompt('Name des Trips?');if(!n)return;
+  cityOf(d.at).t.push({id:'t'+(++uid),n,s:'Optional',f:'',q:'Neu',h:'',r:'',no:''});mark();render();return;}
+ if(b.id==='ac'){const n=prompt('Name der Stadt?');if(!n)return;
+  S.cities.push({id:'c'+(++uid),n,d:0,w:'',no:'',t:[]});mark();render();return;}
+});
+document.addEventListener('change',e=>{
+ const d=e.target.dataset; if(!d.s)return;
+ const[ci,ti]=d.s.split('|'); tripOf(ci,ti).r=e.target.value; mark(); render();
+});
+document.addEventListener('input',e=>{
+ const d=e.target.dataset;
+ if(d.d){cityOf(d.d).d=+e.target.value||0;mark();sum();
+  e.target.closest('.ct').classList.toggle('zero',+e.target.value===0);}
+ else if(d.cnt){cityOf(d.cnt).no=e.target.value;mark();}
+ else if(d.tno){const[ci,ti]=d.tno.split('|');tripOf(ci,ti).no=e.target.value;mark();}
+});
+document.addEventListener('blur',e=>{
+ const d=e.target.dataset;
+ if(d.cn){cityOf(d.cn).n=e.target.textContent.trim();mark();}
+ else if(d.tn&&e.target.isContentEditable){const[ci,ti]=d.tn.split('|');tripOf(ci,ti).n=e.target.textContent.trim();mark();}
+},true);
+document.addEventListener('dblclick',e=>{
+ const t=e.target.closest('.tn'); if(t){t.contentEditable='plaintext-only';t.focus();}
+});
+
+/* ---- Drag & Drop (Zeiger, funktioniert auch auf Touch) ---- */
+let dg=null, gh=null, mk2=null;
+document.addEventListener('pointerdown',e=>{
+ const h=e.target.closest('[data-drag]'); if(!h)return;
+ e.preventDefault(); h.setPointerCapture(e.pointerId);
+ const[kind,...rest]=h.dataset.drag.split('|');
+ dg={kind,ref:rest.join('|'),pid:e.pointerId};
+ gh=document.createElement('div'); gh.className='drag';
+ gh.textContent=kind==='c'?cityOf(dg.ref).n:tripOf(...dg.ref.split('|')).n;
+ document.body.append(gh); move(e);
+});
+function move(e){ if(gh){gh.style.left=(e.clientX+12)+'px'; gh.style.top=(e.clientY-14)+'px';} }
+function clearMk(){ if(mk2){mk2.remove();mk2=null;} document.querySelectorAll('.ct.hot').forEach(x=>x.classList.remove('hot')); }
+document.addEventListener('pointermove',e=>{
+ if(!dg)return; move(e); clearMk();
+ const el=document.elementFromPoint(e.clientX,e.clientY); if(!el)return;
+ mk2=document.createElement('div'); mk2.className='mk';
+ if(dg.kind==='c'){
+  const s=el.closest('.ct'); if(!s){mk2=null;return;}
+  const r=s.getBoundingClientRect();
+  s.parentNode.insertBefore(mk2, e.clientY<r.top+r.height/2?s:s.nextSibling);
+ }else{
+  const tp=el.closest('.tp');
+  if(tp){const r=tp.getBoundingClientRect();
+   tp.parentNode.insertBefore(mk2, e.clientY<r.top+r.height/2?tp:tp.nextSibling); return;}
+  const s=el.closest('.ct');
+  if(s){s.classList.add('hot'); const tr=s.querySelector('.tree'); tr.append(mk2); return;}
+  mk2=null;
+ }
+});
+document.addEventListener('pointerup',e=>{
+ if(!dg)return;
+ const m=mk2, kind=dg.kind, ref=dg.ref;
+ if(gh)gh.remove(); gh=null; dg=null;
+ if(!m){clearMk();return;}
+ if(kind==='c'){
+  const before=m.nextElementSibling?.dataset.c;
+  const i=S.cities.findIndex(c=>c.id===ref), [c]=S.cities.splice(i,1);
+  const j=before?S.cities.findIndex(x=>x.id===before):S.cities.length;
+  S.cities.splice(j<0?S.cities.length:j,0,c);
+ }else{
+  const[ci,ti]=ref.split('|'), from=cityOf(ci);
+  const i=from.t.findIndex(x=>x.id===ti), [t]=from.t.splice(i,1);
+  const tgt=m.closest('.ct')?.dataset.c, to=cityOf(tgt)||from;
+  const nb=m.nextElementSibling?.dataset.tp?.split('|')[1];
+  const j=nb?to.t.findIndex(x=>x.id===nb):to.t.length;
+  to.t.splice(j<0?to.t.length:j,0,t);
+ }
+ clearMk(); mark(); render();
+});
+document.addEventListener('pointercancel',()=>{if(gh)gh.remove();gh=null;dg=null;clearMk();});
+
+const FID=['q','fs','fq','fst','ff'];
+const fdot=()=>{$('#tf').innerHTML='Filter'+(FID.some(i=>$('#'+i).value)?'<i></i>':'');};
+FID.forEach(i=>$('#'+i).addEventListener('input',()=>{fdot();render();}));
+$('#tgt').addEventListener('input',e=>{S.target=+e.target.value||21;mark();sum();});
+
+function dl(x,n,m){const u=URL.createObjectURL(new Blob([x],{type:m}));
+ const a=document.createElement('a');a.href=u;a.download=n;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);}
+const stamp=()=>new Date().toISOString().slice(0,10);
+$('#save').addEventListener('click',()=>{
+ const d=document.documentElement.cloneNode(true);
+ d.querySelector('#saved-data').textContent=JSON.stringify(S);
+ d.querySelector('#main').innerHTML=''; d.querySelector('#dirty').setAttribute('hidden','');
+ dl('<!DOCTYPE html>\n'+d.outerHTML,'China-Plan-'+stamp()+'.html','text/html');
+ dirty=false;$('#dirty').hidden=true;});
+$('#md').addEventListener('click',()=>{
+ let o='# China-Plan — '+stamp()+'\n\nNächte: '+S.cities.reduce((a,c)=>a+(+c.d||0),0)+' (Ziel '+S.target+')\n';
+ S.cities.forEach((c,i)=>{o+=`\n## ${i+1}. ${c.n} — ${c.d} Nächte\n`;
+  if(c.no)o+=`Notiz: ${c.no}\n`;
+  c.t.forEach(t=>{o+=`- ${t.n} [Claude: ${t.s} | ihr: ${t.r||'offen'}]`+(t.no?`\n  Notiz: ${t.no}`:'')+'\n';});});
+ dl(o,'China-fuer-Claude-'+stamp()+'.md','text/markdown');});
+$('#csv').addEventListener('click',()=>{
+ const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const r=[['Nr','Stadt','Nächte','Stadt-Notiz','Trip','Claude','Quelle','Hinweis','Bewertung','Trip-Notiz']];
+ S.cities.forEach((c,i)=>c.t.forEach(t=>r.push([i+1,c.n,c.d,c.no,t.n,t.s,t.q,t.h,t.r,t.no])));
+ dl('\ufeff'+r.map(x=>x.map(q).join(';')).join('\r\n'),'China-Plan-'+stamp()+'.csv','text/csv;charset=utf-8');});
+$('#reset').addEventListener('click',()=>{
+ if(confirm('Alles auf Claudes Vorschlag zurücksetzen? Bewertungen und Notizen gehen verloren.')){
+  S=structuredClone(INIT);$('#tgt').value=S.target;shut={};open1={};mark();render();}});
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+$('#tgt').value=S.target||21; fdot(); render();
+</script></body></html>
